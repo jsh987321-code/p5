@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>과제 4</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>과제 4</h1>
+    </main>
+
+    <script>
+      const dots = [
+        [331.5,118.5,12],[330.5,341.5,12],
+        [207,94,17],[107,332,17],
+        [235.5,251.5,18],[420.5,357.5,18],
+        [514,40,19],[575.5,167.5,20],
+        [324.5,82.5,22],[451,260,23],
+        [364.5,337.5,24],[457,57,25],
+        [132,97,25],[288,232,25],
+        [524.5,247.5,26]
+      ];
+
+      let dotColors = [];
+
+      function setup() {
+        createCanvas(600, 400);
+        colorMode(HSB, 360, 100, 100);
+        for (let i = 0; i < dots.length; i++) {
+          dotColors[i] = color(random(360), 80, 100);
+        }
+        colorMode(RGB, 255);
+      }
+
+      function draw() {
+        let t = frameCount * 0.02;
+        let mt = millis() * 0.001;
+
+        // 배경
+        noStroke();
+        fill(220, 240, 255);
+        rect(0, 0, 300, 400);
+
+        fill(255, 240, 220);
+        rect(300, 0, 300, 400);
+
+        // 큰 원들
+        let redBaseX = 134.5;
+        let redBaseY = 145.5;
+        let redBaseD = 210;
+        let redDX = sin(t) * 5;
+        let redDY = cos(t * 0.8) * 5;
+        let redD  = redBaseD + sin(t * 1.3) * 15;
+
+        let blueBaseD = 230;
+        let blueD = blueBaseD + cos(t * 0.9) * 12;
+
+        let c1 = color(255, 100, 120);
+        let c2 = color(120, 250, 160);
+        let amt = (sin(t * 0.7) + 1) / 2;
+        let redCircleColor = lerpColor(c1, c2, amt);
+
+        fill(redCircleColor);
+        ellipse(redBaseX + redDX, redBaseY + redDY, redD, redD);
+
+        fill(120, 180, 255);
+        ellipse(310.0, 227.5, blueD, blueD);
+
+        let greenShift = sin(t * 0.5) * 8;
+        fill(120, 250, 160);
+        ellipse(391.5 + greenShift, 110.0, 180, 180);
+
+        // 사각형들
+        fill(255, 200, 0);
+        let yellowOffset = sin(t * 0.8) * 5;
+        rect(50, 250 + yellowOffset, 121, 121);
+
+        fill(180, 100, 255);
+        let purpleOffset = cos(t * 0.6) * 5;
+        rect(220 + purpleOffset, 50, 78, 121);
+
+        fill(0, 200, 200);
+        let tealOffset = sin(t * 0.9 + 1.0) * 6;
+        rect(412.4, 275.9 + tealOffset, 101, 81);
+
+        // 삼각형들
+        fill(200, 255, 150);
+        let tri1Offset = sin(t * 0.7) * 4;
+        triangle(200.5, 30 + tri1Offset,
+                 122,   79 + tri1Offset,
+                 180,  140 + tri1Offset);
+
+        fill(255, 150, 200);
+        let tri2Offset = cos(t * 0.7) * 4;
+        triangle(500,   50 + tri2Offset,
+                 570,   50 + tri2Offset,
+                 535.8,120 + tri2Offset);
+
+        // 선
+        stroke(0);
+        strokeWeight(5);
+        line(300, 0, 300, 400);
+        strokeWeight(2.5);
+        line(0, 0, 600, 400);
+        line(0, 400, 600, 0);
+
+        // 작은 점들
+        noStroke();
+        push();
+        colorMode(HSB, 360, 100, 100);
+
+        for (let i = 0; i < dots.length; i++) {
+          let base = dots[i];
+          let baseColor = dotColors[i];
+
+          let h = (hue(baseColor) + mt * 40 + i * 10) % 360;
+          let s = 80;
+          let b = 100;
+          fill(h, s, b);
+
+          let wobbleX = sin(t * 1.2 + i) * 4;
+          let wobbleY = cos(t * 1.1 + i) * 4;
+          let sizePulse = sin(t * 1.5 + i) * 2;
+
+          ellipse(base[0] + wobbleX,
+                  base[1] + wobbleY,
+                  base[2] + sizePulse,
+                  base[2] + sizePulse);
+        }
+        pop();
+      }
+    </script>
+  </body>
+</html>

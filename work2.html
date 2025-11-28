@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>과제 2</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>과제 2</h1>
+    </main>
+
+    <script>
+      function setup() {
+        createCanvas(600, 400); // 캔버스 크기 설정
+        angleMode(DEGREES); // 각도를 도로 설정하여 arc 함수 사용을 편리하게 합니다.
+        // noLoop(); // 필요한 경우 주석 해제 (정적인 그림이라면)
+      }
+
+      function draw() {
+        background(255, 255, 0); // 배경색 (밝은 노랑색)
+
+        // 색상 정의
+        let faceColor = color(255, 220, 180); // 살구색 피부
+        let hairColor = color(20, 20, 20); // 긴 검정 머리카락
+        let eyebrowColor = color(15, 15, 15); // 눈썹 색 (머리카락색과 비슷하게)
+        let eyeBrownColor = color(139, 69, 19); // 갈색 눈동자
+        let scleraColor = color(255); // 흰자
+        let noseColor = color(255, 180, 150); // 코 색상 (얼굴색보다 진하게)
+        let mouthColor = color(180, 0, 0); // 빨간 입술
+        let pinkClothColor = color(255, 192, 203); // 핑크색 옷
+
+        // --- 그림 순서 (레이어) 중요! ---
+
+        // 1. 머리카락 (메인 덩어리)
+        noStroke();
+        fill(hairColor);
+        beginShape();
+        vertex(width / 2 - 120, height / 2 - 120);
+        bezierVertex(width / 2 - 180, height / 2 - 150,
+                     width / 2 + 180, height / 2 - 150,
+                     width / 2 + 120, height / 2 - 120);
+        bezierVertex(width / 2 + 180, height / 2 + 0,
+                     width / 2 + 180, height / 2 + 120,
+                     width / 2 + 100, height / 2 + 180);
+        bezierVertex(width / 2 + 50, height / 2 + 200,
+                     width / 2 - 50, height / 2 + 200,
+                     width / 2 - 100, height / 2 + 180);
+        bezierVertex(width / 2 - 180, height / 2 + 120,
+                     width / 2 - 180, height / 2 + 0,
+                     width / 2 - 120, height / 2 - 120);
+        endShape(CLOSE);
+
+        // 2. 귀
+        fill(faceColor);
+        stroke(0);
+        strokeWeight(1.5);
+        ellipse(width / 2 - 110, height / 2, 30, 60);
+        ellipse(width / 2 + 110, height / 2, 30, 60);
+
+        // 3. 목
+        noStroke();
+        fill(faceColor);
+        rect(width / 2 - 20, height / 2 + 110, 40, 50);
+
+        // 4. 얼굴
+        fill(faceColor);
+        stroke(0);
+        strokeWeight(2);
+        ellipse(width / 2, height / 2, 200, 220);
+
+        // 5. 앞머리
+        noStroke();
+        fill(hairColor);
+        beginShape();
+        vertex(width / 2 - 90, height / 2 - 80);
+        bezierVertex(width / 2 - 70, height / 2 - 130,
+                     width / 2 + 70, height / 2 - 130,
+                     width / 2 + 90, height / 2 - 80);
+        bezierVertex(width / 2 + 60, height / 2 - 50,
+                     width / 2 - 60, height / 2 - 50,
+                     width / 2 - 90, height / 2 - 80);
+        endShape(CLOSE);
+
+        // 6. 눈썹
+        noFill();
+        stroke(eyebrowColor);
+        strokeWeight(3);
+        arc(width / 2 - 40, height / 2 - 50, 40, 20, 180, 360);
+        arc(width / 2 + 40, height / 2 - 50, 40, 20, 180, 360);
+
+        // 7. 눈
+        fill(scleraColor);
+        stroke(0);
+        strokeWeight(1);
+        ellipse(width / 2 - 40, height / 2 - 30, 40, 30);
+        ellipse(width / 2 + 40, height / 2 - 30, 40, 30);
+
+        fill(eyeBrownColor);
+        noStroke();
+        ellipse(width / 2 - 40, height / 2 - 30, 15, 15);
+        ellipse(width / 2 + 40, height / 2 - 30, 15, 15);
+
+        fill(0);
+        ellipse(width / 2 - 40, height / 2 - 30, 8, 8);
+        ellipse(width / 2 + 40, height / 2 - 30, 8, 8);
+
+        // 8. 코
+        fill(noseColor);
+        noStroke();
+        triangle(width / 2 - 10, height / 2 + 10,
+                 width / 2 + 10, height / 2 + 10,
+                 width / 2, height / 2 + 40);
+
+        // 9. 입
+        fill(mouthColor);
+        stroke(0);
+        strokeWeight(1);
+        arc(width / 2, height / 2 + 70, 80, 40, 0, 180);
+
+        // 10. 옷
+        fill(pinkClothColor);
+        stroke(0);
+        strokeWeight(2);
+        rect(width / 2 - 150, height / 2 + 150, 300, 100);
+      }
+
+      function keyPressed() {
+        saveCanvas('my_caricature', 'png');
+      }
+    </script>
+  </body>
+</html>
